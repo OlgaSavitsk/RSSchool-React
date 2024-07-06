@@ -1,31 +1,60 @@
-import React, { Fragment, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import React, { Component, Fragment } from "react";
 import "./App.css";
+import { SearchComponent } from "./components/search";
+import { CardListComponent } from "./components/card-list";
+import axios from "axios";
+import { LoaderComponent } from "./components/loader";
+import { StarWarsPeople } from "./types/item.types";
 
-function App() {
-  const [count, setCount] = useState(0);
+type AppState = {
+  data: StarWarsPeople[] | null,
+  isLoading: boolean,
+  searchValue: string
+}
 
-  return (
-    <Fragment>
-      <div>
-        <a href="https://vitejs.dev">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </Fragment>
-  );
+export class App extends Component {
+  state: AppState = {
+    data: null,
+    isLoading: true,
+    searchValue: ''
+  };
+
+  componentDidMount() {
+    const savedValue = JSON.parse(localStorage.getItem('search')!) || ''
+    this.fetchData(savedValue);
+  }
+
+  componentDidUpdate(_: unknown, prevState: AppState) {
+    if (
+      this.state.searchValue !== prevState.searchValue
+    ) {
+      this.fetchData(this.state.searchValue)
+    }
+  }
+
+  async fetchData(savedValue: string) {
+    this.setState({ isLoading: true })
+    try {
+      console.log(savedValue, this.state.searchValue)
+      axios.get(`https://swapi.dev/api/people/?page=1&search=${savedValue}`)
+        .then(response => this.setState({ data: response.data.results, isLoading: false }))
+    } catch (error) {
+      this.setState({ isLoading: false })
+    }
+  }
+
+  render() {
+    const { data, isLoading } = { ...this.state }
+    if (isLoading) {
+      return <LoaderComponent />
+    }
+    return (
+      <Fragment>
+        <SearchComponent onChange={(value) => this.setState({ searchValue: value })} />
+        {data ? <CardListComponent data={data} /> : null}
+      </Fragment>
+    );
+  }
 }
 
 export default App;
