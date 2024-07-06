@@ -8,7 +8,8 @@ type SearchComponentProps = {
 
 export class SearchComponent extends Component<SearchComponentProps> {
   state = {
-    searchValue: ''
+    searchValue: '',
+    isError: false
   };
 
   onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,13 +22,20 @@ export class SearchComponent extends Component<SearchComponentProps> {
     this.props.onChange(searchValue)
   }
 
+  initError = () => {
+    this.setState({ isError: true })
+  }
+
   render() {
+    if (this.state.isError) {
+      throw new Error("Unexpected Render Error occured!")
+    }
     return (
       <div className={classes.wrapper}>
         <img src='../starwars.svg' alt='logo' />
         <input type='text' className={classes.input} onChange={this.onChangeSearch} placeholder='Search...' />
         <button onClick={this.handleSearchValue}>Search</button>
-        <button className={classes.error}>Error</button>
+        <button className={classes.error} onClick={this.initError}>Error</button>
       </div>
     )
   }

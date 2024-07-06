@@ -1,10 +1,11 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import "./App.css";
 import { SearchComponent } from "./components/search";
 import { CardListComponent } from "./components/card-list";
 import axios from "axios";
 import { LoaderComponent } from "./components/loader";
 import { StarWarsPeople } from "./types/item.types";
+import { ErrorBoundary } from "./error-handling/error-boundary";
 
 type AppState = {
   data: StarWarsPeople[] | null,
@@ -35,12 +36,15 @@ export class App extends Component {
   async fetchData(savedValue: string) {
     this.setState({ isLoading: true })
     try {
-      console.log(savedValue, this.state.searchValue)
       axios.get(`https://swapi.dev/api/people/?page=1&search=${savedValue}`)
         .then(response => this.setState({ data: response.data.results, isLoading: false }))
     } catch (error) {
       this.setState({ isLoading: false })
     }
+  }
+
+  initError = () => {
+    throw new Error("Unexpected Render Error occured!")
   }
 
   render() {
@@ -49,10 +53,10 @@ export class App extends Component {
       return <LoaderComponent />
     }
     return (
-      <Fragment>
+      <ErrorBoundary>
         <SearchComponent onChange={(value) => this.setState({ searchValue: value })} />
         {data ? <CardListComponent data={data} /> : null}
-      </Fragment>
+      </ErrorBoundary>
     );
   }
 }
