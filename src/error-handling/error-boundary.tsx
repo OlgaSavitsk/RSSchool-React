@@ -1,11 +1,11 @@
-import { Component, ErrorInfo, ReactNode } from "react";
+import React, { ErrorInfo, ReactNode } from "react";
 import { FetchingError } from "../components/errors/fetching-error";
 
 type ErrorBoundaryProps = {
   children: ReactNode,
 }
 
-export class ErrorBoundary extends Component<ErrorBoundaryProps> {
+export class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
   state: {
     hasError: boolean;
     error?: Error;
