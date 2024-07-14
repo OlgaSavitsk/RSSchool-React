@@ -1,64 +1,44 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { SearchComponent } from "./components/search";
 import { CardListComponent } from "./components/card-list";
-import axios from "axios";
 import { LoaderComponent } from "./components/loader";
 import { StarWarsPeople } from "./types/item.types";
-import { ErrorBoundary } from "./error-handling/error-boundary";
+import { getPeoples } from "./services/people.api";
+import { useStorage } from "./hooks/use-storage.hook";
+import { PaginationComponent } from "./components/pagination";
 
-type AppState = {
-  data: StarWarsPeople[] | null,
-  isLoading: boolean,
-  searchValue: string
-}
 
-export class App extends Component {
-  state: AppState = {
-    data: null,
-    isLoading: true,
-    searchValue: ''
-  };
+export const App = () => {
+  const [searchValue] = useStorage('search', '');
+  const [data, setData] = useState<StarWarsPeople[] | null>(null)
+  const [isLoading, setLoading] = useState(true)
+  const [input, setSearchValue] = useState(searchValue || '')
+  const [page, setPage] = useState(1)
 
-  componentDidMount() {
-    const savedValue = JSON.parse(localStorage.getItem('search')!) || ''
-    this.fetchData(savedValue);
-  }
-
-  componentDidUpdate(_: unknown, prevState: AppState) {
-    if (
-      this.state.searchValue !== prevState.searchValue
-    ) {
-      this.fetchData(this.state.searchValue)
-    }
-  }
-
-  async fetchData(savedValue: string) {
-    this.setState({ isLoading: true })
+  const fetchData = async (savedValue: string, page: number) => {
+    setLoading(true)
     try {
-      axios.get(`https://swapi.dev/api/people/?page=1&search=${savedValue}`)
-        .then(response => this.setState({ data: response.data.results, isLoading: false }))
+      const data = await getPeoples(savedValue, page)
+      setData(data.results)
+      setLoading(false)
     } catch (error) {
-      this.setState({ isLoading: false })
+      setLoading(false)
     }
   }
 
-  initError = () => {
-    throw new Error("Unexpected Render Error occured!")
-  }
+  useEffect(() => {
+    fetchData(input, page)
+  }, [input, page])
 
-  render() {
-    const { data, isLoading } = { ...this.state }
-    if (isLoading) {
-      return <LoaderComponent />
-    }
-    return (
-      <ErrorBoundary>
-        <SearchComponent onChange={(value) => this.setState({ searchValue: value })} />
-        {data ? <CardListComponent data={data} /> : null}
-      </ErrorBoundary>
-    );
-  }
+  return (
+      <>
+      <SearchComponent onChange={(value) => setSearchValue(value)} />
+      <CardListComponent data={data} />
+      {data && <PaginationComponent setPage={(page) => setPage(page)}/>}
+      {isLoading ? <LoaderComponent /> : null}
+      </>
+  );
 }
 
 export default App;

@@ -1,42 +1,36 @@
-import React, { Component } from 'react';
+import React, { FC, useRef } from 'react';
 
 import classes from './index.module.css';
 import { StarWarsPeople } from '../../types/item.types';
+import { CardComponent } from '../card';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 type CardListComponentProps = {
-  data: StarWarsPeople[]
+  data: StarWarsPeople[] | null
 }
 
-export class CardListComponent extends Component<CardListComponentProps> {
-  render() {
-    const { data } = this.props
-    return (
-      <div className={classes.wrapper}>
-        {data && data.map((item) =>
+export const CardListComponent: FC<CardListComponentProps> = ({ data }) => {
+  const navigate = useNavigate();
+  const container = useRef<HTMLDivElement>(null)
 
-        (<div key={item.name} className={classes.card}>
-          <h3>{item.name}</h3>
-          <div className={classes.info}>
-            <dl>
-              <div className={classes.descriptions}>
-                <dt>Height</dt><dd>{item.height}</dd>
-              </div>
-              <div className={classes.descriptions}>
-
-                <dt>Mass</dt><dd>{item.mass}</dd>
-              </div>
-
-              <div className={classes.descriptions}>
-                <dt>Hair Color</dt><dd>{item.hair_color}</dd>
-              </div>
-              <div className={classes.descriptions}>
-                <dt>Gender</dt><dd>{item.gender}</dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-        ))}
-      </div >
-    )
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (container.current === event.target as HTMLElement) {
+      navigate('/')
+    }
   }
+
+  return (
+    <><div className={classes.wrapper}>
+      <div ref={container} className={classes.content} onClick={handleClick}>
+        {data
+          ? data.map((item, index) =>
+
+            <CardComponent item={item}  key={index}/>)
+
+          : <div>Nothing was found</div>}
+      </div>
+      <Outlet />
+    </div>
+    </>
+  )
 }

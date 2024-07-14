@@ -3,18 +3,11 @@
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 16px;
-  max-width: 1040px;
+  max-width: 960px;
   width: 100%;
   margin: 24px auto;
-}
-
-.content {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 16px 40px;
 }
 
 .card {
@@ -37,6 +30,7 @@
 .descriptions {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 dt::after {
