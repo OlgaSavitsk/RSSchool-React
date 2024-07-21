@@ -1,0 +1,32 @@
+.overlay {
+  position: fixed;
+  bottom: 20px;
+  right: 0;
+  width: 200px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #1897c2;
+  padding: 16px;
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.active {
+  transform: translateX(-50px);
+}
+
+.button {
+  border-radius: 10px;
+  padding: 8px;
+  background: darkmagenta;
+}

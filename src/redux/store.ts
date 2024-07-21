@@ -1,12 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import appReducer, { AppState, appSlice } from "./modules/app";
-import favouriteReducer from "./modules/favourites";
+import favouriteReducer, { FavouritesState } from "./modules/favourites";
 import { apiSlice } from "./services";
 import { favouriteSlice } from "./modules/favourites";
 
 export type ApplicationState = Readonly<{
   [appSlice.name]: AppState;
-  [favouriteSlice.name]: AppState;
+  [favouriteSlice.name]: FavouritesState;
 }>;
 
 const rootReducer = combineReducers({

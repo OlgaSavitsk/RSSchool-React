@@ -4,14 +4,14 @@ import { ApplicationState } from "../store";
 
 export type AppState = {
   items: StarWarsPeople[];
-  favourites: number[];
+  item: StarWarsPeople | null;
   isLoading: boolean;
-  isError: boolean
+  isError: boolean;
 };
 
 export const initialState: AppState = {
   items: [],
-  favourites: [],
+  item: null,
   isLoading: false,
   isError: false,
 };
@@ -29,11 +29,14 @@ export const appSlice = createSlice({
     setItems(state, { payload: items }: PayloadAction<StarWarsPeople[]>) {
       state.items = items;
     },
+    setItem(state, { payload: item }: PayloadAction<StarWarsPeople>) {
+      state.item = item;
+    },
   },
 });
 
 export const appSelector = (state: ApplicationState) => state.app;
 
-export const { setItems, setLoader, setError } = appSlice.actions;
+export const { setItems, setItem, setLoader, setError } = appSlice.actions;
 
 export default appSlice.reducer;

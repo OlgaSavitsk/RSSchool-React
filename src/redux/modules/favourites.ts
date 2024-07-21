@@ -1,22 +1,36 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { initialState } from "./app";
+import { ApplicationState } from "../store";
+import { StarWarsPeople } from "../../types/item.types";
+
+export type FavouritesState = {
+  favourites: StarWarsPeople[];
+};
+
+export const initialState: FavouritesState = {
+  favourites: [],
+};
 
 export const favouriteSlice = createSlice({
   name: "favourites",
   initialState,
   reducers: {
-    addFavourites(state, { payload: id }: PayloadAction<number>) {
-      // const isFavourites = state.favourites.some((favourite) => favourite === id);
-      const index = state.favourites.findIndex((favourite) => favourite === id);
+    addFavourites(state, { payload: item }: PayloadAction<StarWarsPeople>) {
+      const index = state.favourites.findIndex((favourite) => favourite.name === item.name);
       if (index !== -1) {
         state.favourites.splice(index, 1);
       } else {
-        state.favourites.push(id);
+        state.favourites.push(item);
       }
+    },
+
+    removeFavourites(state) {
+      state.favourites = [];
     },
   },
 });
 
-export const { addFavourites } = favouriteSlice.actions;
+export const { addFavourites, removeFavourites } = favouriteSlice.actions;
+
+export const favouritesSelector = (state: ApplicationState) => state.favourites;
 
 export default favouriteSlice.reducer;
