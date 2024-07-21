@@ -5,7 +5,7 @@ import classes from "./index.module.css";
 import { Link } from "react-router-dom";
 import { getId, isValueExist } from "../../utils";
 import IconStar from "../icon-star";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux.hook";
 import { addFavourites, favouritesSelector } from "../../redux/modules/favourites";
 
 type CardComponentProps = {
@@ -16,19 +16,24 @@ export const CardComponent: FC<CardComponentProps> = ({ item }) => {
   const dispatch = useAppDispatch();
   const { favourites } = useAppSelector(favouritesSelector);
 
-  const isFavExist = isValueExist(favourites, item)
+  const isFavExist = isValueExist(favourites, item);
 
-  const handleAddFavourites = useCallback((event: MouseEvent) => {
-    event.preventDefault()
-    dispatch(addFavourites(item))
-  }, [dispatch, item])
+  const handleAddFavourites = useCallback(
+    (event: MouseEvent) => {
+      event.preventDefault();
+      dispatch(addFavourites(item));
+    },
+    [dispatch, item],
+  );
 
   return (
     <Link data-testid="card" to={`people/${getId(item)}`} key={item.name}>
       <div key={item.name} className={classes.card}>
         <div className={classes.header}>
           <h3>{item.name}</h3>
-          <button onClick={(event) => handleAddFavourites(event)}><IconStar color={isFavExist ? 'darkmagenta' : ''} /></button>
+          <button onClick={(event) => handleAddFavourites(event)}>
+            <IconStar color={isFavExist ? "darkmagenta" : ""} />
+          </button>
         </div>
 
         <div className={classes.info}>
@@ -54,5 +59,5 @@ export const CardComponent: FC<CardComponentProps> = ({ item }) => {
         </div>
       </div>
     </Link>
-  )
+  );
 };

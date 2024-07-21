@@ -11,17 +11,20 @@
     height: 70px;
   }
 
+  .error {
+    margin: 0 24px;
+    border-radius: 8px;
+  }
+
   button {
     height: 59px;
     border: none;
     border-radius: 6px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
   }
 
-  .error {
-    margin: 0 24px;
-    border-radius: 8px;
+  .button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 }
 

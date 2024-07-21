@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import { SearchComponent } from "./components/search";
 import { CardListComponent } from "./components/card-list";
 import { LoaderComponent } from "./components/loader";
@@ -7,11 +6,16 @@ import { useStorage } from "./hooks/use-storage.hook";
 import { PaginationComponent } from "./components/pagination";
 import { useGetItemsQuery } from "./redux/services/items";
 import { ModalComponent } from "./components/modal";
+import { AppContext } from "./context";
+
+import classes from "./index.module.css";
 
 export const App = () => {
   const [searchValue] = useStorage("search", "");
   const [input, setSearchValue] = useState(searchValue || "");
   const [page, setPage] = useState(1);
+  const [themeValue, setTheme] = useState<"dark" | "light">("dark");
+  const className = classes[themeValue];
   const { data = [], refetch, isFetching } = useGetItemsQuery({ searchValue: input, page });
 
   useEffect(() => {
@@ -19,13 +23,19 @@ export const App = () => {
   }, [input, page]);
 
   return (
-    <>
-      <SearchComponent onChange={(value) => setSearchValue(value)} />
-      <CardListComponent data={data} />
-      {data && <PaginationComponent setPage={(page) => setPage(page)} />}
-      {isFetching ? <LoaderComponent /> : null}
-      <ModalComponent />
-    </>
+    <AppContext.Provider value={{ theme: themeValue }}>
+      <SearchComponent
+        onChange={(value) => setSearchValue(value)}
+        setToggleTheme={(theme) => setTheme(theme === "dark" ? "light" : "dark")}
+      />
+
+      <div className={className}>
+        <CardListComponent data={data} />
+        {data && <PaginationComponent setPage={(page) => setPage(page)} />}
+        {isFetching ? <LoaderComponent /> : null}
+        <ModalComponent />
+      </div>
+    </AppContext.Provider>
   );
 };
 
