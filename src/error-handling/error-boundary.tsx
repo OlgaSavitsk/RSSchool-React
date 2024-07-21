@@ -1,9 +1,10 @@
-import React, { ErrorInfo, ReactNode } from "react";
+import { ErrorInfo, ReactNode } from "react";
 import { FetchingError } from "../components/errors/fetching-error";
+import * as React from "react";
 
 type ErrorBoundaryProps = {
-  children: ReactNode,
-}
+  children: ReactNode;
+};
 
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
   state: {
@@ -21,15 +22,13 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
   }
 
   componentDidCatch(error: Error, erroInfo: ErrorInfo) {
-    console.log("Error caught!", erroInfo)
+    console.log("Error caught!", erroInfo);
     console.error(error);
   }
 
   render() {
     if (this.state.hasError) {
-      return <FetchingError error={this.state.error?.message || ''} />;
-    } else
-
-      return this.props.children;
+      return <FetchingError error={this.state.error?.message || ""} />;
+    } else return this.props.children;
   }
 }

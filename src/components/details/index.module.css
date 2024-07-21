@@ -11,3 +11,7 @@
   width: 70px;
   padding: 8px;
 }
+
+.content {
+  pointer-events: none;
+}

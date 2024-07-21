@@ -1,5 +1,5 @@
 export type StarWarsPeopleResponse = {
-  results: StarWarsPeople[]
+  results: StarWarsPeople[];
 };
 
 export type StarWarsPeople = {
@@ -9,5 +9,10 @@ export type StarWarsPeople = {
   height: string;
   mass: string;
   name: string;
-  url: string
+  url: string;
+};
+
+export type QueryParams = {
+  searchValue: string;
+  page: number;
 };
