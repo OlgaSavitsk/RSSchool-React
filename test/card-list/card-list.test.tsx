@@ -2,6 +2,8 @@ import { render } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
 import { CardListComponent } from "../../src/components/card-list/index";
 import { BrowserRouter as Router } from "react-router-dom";
+import { StarWarsPeople } from "../../src/types/item.types";
+import { renderWithRouter } from "../router";
 
 describe("Card List", () => {
   test("component renders the specified number of cards", () => {
@@ -9,20 +11,16 @@ describe("Card List", () => {
       .fill(null)
       .map((item, i) => ({ ...item, id: i + 1 }));
     const value = data.length;
-    const { getAllByTestId } = render(
-      <Router>
+    const { getAllByTestId } = renderWithRouter(
         <CardListComponent data={data} />
-      </Router>,
     );
     expect(getAllByTestId("card")).toHaveLength(value);
   });
 
   test("message is displayed if no cards are present", () => {
-    const data = null;
-    const { getByText } = render(
-      <Router>
+    const data: StarWarsPeople[] = []
+    const { getByText } = renderWithRouter(
         <CardListComponent data={data} />
-      </Router>,
     );
     const message = getByText("Nothing was found");
     expect(message).toBeInTheDocument();

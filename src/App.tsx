@@ -9,6 +9,7 @@ import { ModalComponent } from "./components/modal";
 import { AppContext } from "./context";
 
 import classes from "./index.module.css";
+import { isArrayWithItems } from "./utils";
 
 export const App = () => {
   const [searchValue] = useStorage("search", "");
@@ -29,9 +30,9 @@ export const App = () => {
         setToggleTheme={(theme) => setTheme(theme === "dark" ? "light" : "dark")}
       />
 
-      <div className={className}>
+      <div className={`${classes.wrapper} ${className}`}>
         <CardListComponent data={data} />
-        {data && <PaginationComponent setPage={(page) => setPage(page)} />}
+        {isArrayWithItems(data) && <PaginationComponent setPage={(page) => setPage(page)} />}
         {isFetching ? <LoaderComponent /> : null}
         <ModalComponent />
       </div>

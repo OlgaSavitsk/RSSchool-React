@@ -4,9 +4,10 @@ import classes from "./index.module.css";
 import { StarWarsPeople } from "../../types/item.types";
 import { CardComponent } from "../card";
 import { Outlet, useNavigate } from "react-router-dom";
+import { isArrayWithItems } from "../../utils";
 
 type CardListComponentProps = {
-  data?: StarWarsPeople[];
+  data: StarWarsPeople[];
 };
 
 export const CardListComponent: FC<CardListComponentProps> = ({ data }) => {
@@ -23,10 +24,10 @@ export const CardListComponent: FC<CardListComponentProps> = ({ data }) => {
     <>
       <div className={classes.wrapper}>
         <div ref={container} className={classes.content} onClick={handleClick}>
-          {data ? (
+          {isArrayWithItems(data) ? (
             data.map((item, index) => <CardComponent item={item} key={index} />)
           ) : (
-            <div>Nothing was found</div>
+            <div className={classes.empty}>Nothing was found</div>
           )}
         </div>
         <Outlet />

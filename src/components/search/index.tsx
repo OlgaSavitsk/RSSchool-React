@@ -10,7 +10,7 @@ type SearchComponentProps = {
 };
 
 export const SearchComponent: FC<SearchComponentProps> = ({ onChange, setToggleTheme }) => {
-  const [searchValue, setValue] = useStorage("search", "");
+  const [searchValue] = useStorage("search", "");
   const [inputValue, setInputValue] = useState(searchValue || "");
   const [isError, setError] = useState(false);
   const [themeValue, setTheme] = useState<"dark" | "light">("dark");
@@ -20,9 +20,9 @@ export const SearchComponent: FC<SearchComponentProps> = ({ onChange, setToggleT
   };
 
   const handleSearchValue = useCallback(() => {
-    setValue(inputValue);
     onChange(inputValue);
-  }, [onChange, inputValue, setValue]);
+    localStorage.setItem("search", JSON.stringify(inputValue));
+  }, [onChange, inputValue]);
 
   const handleToggleTheme = useCallback(() => {
     setTheme(themeValue === "dark" ? "light" : "dark");
@@ -32,12 +32,6 @@ export const SearchComponent: FC<SearchComponentProps> = ({ onChange, setToggleT
   const initError = () => {
     setError(true);
   };
-
-  useEffect(() => {
-    return () => {
-      localStorage.setItem("search", JSON.stringify(searchValue));
-    };
-  }, [searchValue]);
 
   if (isError) {
     throw new Error("Unexpected Render Error occured!");
@@ -53,7 +47,7 @@ export const SearchComponent: FC<SearchComponentProps> = ({ onChange, setToggleT
         onChange={onChangeSearch}
         placeholder="Search..."
       />
-      <button className={classes.button} onClick={handleSearchValue}>
+      <button data-testid='search' className={classes.button} onClick={handleSearchValue}>
         Search
       </button>
       <button className={classes.error} onClick={initError}>

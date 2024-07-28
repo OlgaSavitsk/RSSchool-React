@@ -4,21 +4,15 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux.hook";
 import { favouritesSelector, removeFavourites } from "../../redux/modules/favourites";
 import { convertCSV, transformNumber } from "../../utils";
 import classes from "./index.module.css";
+import { Link } from "react-router-dom";
 
 export const ModalComponent: FC = () => {
   const dispatch = useAppDispatch();
   const { favourites } = useAppSelector(favouritesSelector);
+  const encodeURL = encodeURI(convertCSV(favourites));
 
   const handleSelectAll = () => {
     dispatch(removeFavourites());
-  };
-
-  const handleDownload = () => {
-    const encodeURL = encodeURI(convertCSV(favourites));
-    const link = document.createElement("a");
-    link.href = encodeURL;
-    link.download = `${favourites.length}_peoples.csv`;
-    link.click();
   };
 
   return (
@@ -32,9 +26,7 @@ export const ModalComponent: FC = () => {
         <button className={classes.button} onClick={handleSelectAll}>
           Unselect all
         </button>
-        <button className={classes.button} onClick={handleDownload}>
-          Download
-        </button>
+        <Link to={encodeURL} download={`${favourites.length}_peoples.csv`} className={classes.button}>Download</Link>
       </div>
     </div>
   );

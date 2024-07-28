@@ -31,7 +31,7 @@ export const CardComponent: FC<CardComponentProps> = ({ item }) => {
       <div key={item.name} className={classes.card}>
         <div className={classes.header}>
           <h3>{item.name}</h3>
-          <button onClick={(event) => handleAddFavourites(event)}>
+          <button data-testid='favourites' onClick={(event) => handleAddFavourites(event)}>
             <IconStar color={isFavExist ? "darkmagenta" : ""} />
           </button>
         </div>

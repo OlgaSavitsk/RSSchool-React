@@ -3,7 +3,7 @@ export type StarWarsPeopleResponse = {
 };
 
 export type StarWarsPeople = {
-  id: number;
+  id: string;
   gender: string;
   hair_color: string;
   height: string;
