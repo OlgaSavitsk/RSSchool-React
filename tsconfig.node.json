@@ -8,10 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "noEmit": true,
-    "types": [
-      "@testing-library/jest-dom",
-      "vitest/globals"
-    ]
+    "types": ["@testing-library/jest-dom", "vitest/globals"]
   },
   "include": [
     "vite.config.ts",

@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, FC, useCallback, useState } from "react";
 
 import { useStorage } from "../../hooks/use-storage.hook";
 import classes from "./index.module.css";
@@ -47,7 +47,7 @@ export const SearchComponent: FC<SearchComponentProps> = ({ onChange, setToggleT
         onChange={onChangeSearch}
         placeholder="Search..."
       />
-      <button data-testid='search' className={classes.button} onClick={handleSearchValue}>
+      <button data-testid="search" className={classes.button} onClick={handleSearchValue}>
         Search
       </button>
       <button className={classes.error} onClick={initError}>

@@ -26,7 +26,13 @@ export const ModalComponent: FC = () => {
         <button className={classes.button} onClick={handleSelectAll}>
           Unselect all
         </button>
-        <Link to={encodeURL} download={`${favourites.length}_peoples.csv`} className={classes.button}>Download</Link>
+        <Link
+          to={encodeURL}
+          download={`${favourites.length}_peoples.csv`}
+          className={classes.button}
+        >
+          Download
+        </Link>
       </div>
     </div>
   );

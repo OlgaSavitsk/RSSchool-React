@@ -1,5 +1,5 @@
-import configureStore from 'redux-mock-store';
-import { initialState } from '../redux/modules/app';
+import configureStore from "redux-mock-store";
+import { initialState } from "../redux/modules/app";
 
 const mockStore = configureStore();
-export const store = mockStore(initialState)
+export const store = mockStore(initialState);

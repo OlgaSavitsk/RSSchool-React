@@ -2,7 +2,7 @@ import { MouseEvent, FC, useCallback } from "react";
 
 import { StarWarsPeople } from "../../types/item.types";
 import classes from "./index.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getId, isValueExist } from "../../utils";
 import IconStar from "../icon-star";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux.hook";
@@ -15,6 +15,7 @@ type CardComponentProps = {
 export const CardComponent: FC<CardComponentProps> = ({ item }) => {
   const dispatch = useAppDispatch();
   const { favourites } = useAppSelector(favouritesSelector);
+  const location = useLocation()
 
   const isFavExist = isValueExist(favourites, item);
 
@@ -27,11 +28,11 @@ export const CardComponent: FC<CardComponentProps> = ({ item }) => {
   );
 
   return (
-    <Link data-testid="card" to={`people/${getId(item)}`} key={item.name}>
+    <Link data-testid="card" to={`people/${getId(item)}/${location.search}`} key={item.name}>
       <div key={item.name} className={classes.card}>
         <div className={classes.header}>
           <h3>{item.name}</h3>
-          <button data-testid='favourites' onClick={(event) => handleAddFavourites(event)}>
+          <button data-testid="favourites" onClick={(event) => handleAddFavourites(event)}>
             <IconStar color={isFavExist ? "darkmagenta" : ""} />
           </button>
         </div>

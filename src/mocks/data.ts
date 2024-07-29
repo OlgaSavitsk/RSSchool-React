@@ -11,5 +11,5 @@ export const dataResponse: StarWarsPeople = {
 };
 
 export const dataResponseList: StarWarsPeopleResponse = {
-    results: [dataResponse]
+  results: [dataResponse],
 };

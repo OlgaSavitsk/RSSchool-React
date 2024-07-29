@@ -10,11 +10,13 @@ import { AppContext } from "./context";
 
 import classes from "./index.module.css";
 import { isArrayWithItems } from "./utils";
+import { usePagination } from "./hooks/use-pagination.hook";
 
 export const App = () => {
   const [searchValue] = useStorage("search", "");
   const [input, setSearchValue] = useState(searchValue || "");
   const [page, setPage] = useState(1);
+  usePagination(page)
   const [themeValue, setTheme] = useState<"dark" | "light">("dark");
   const className = classes[themeValue];
   const { data = [], refetch, isFetching } = useGetItemsQuery({ searchValue: input, page });

@@ -1,4 +1,4 @@
-import { delay, http, HttpHandler, HttpResponse } from "msw";
+import { http, HttpHandler, HttpResponse } from "msw";
 import { dataResponse, dataResponseList } from "./data";
 
 export const handlers: HttpHandler[] = [
