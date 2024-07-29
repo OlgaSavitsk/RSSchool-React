@@ -1,0 +1,15 @@
+:root {
+  height: 100vh;
+}
+
+.wrapper {
+  height: 100%;
+}
+
+.light {
+  background: aliceblue;
+}
+
+.dark {
+  background: #242424;
+}
