@@ -4,20 +4,18 @@ import { describe, it, expect, vi } from "vitest";
 import PageLayout from "@components/app-layout/page-layout/index";
 import * as useContext from "@hooks/use-context.hook";
 import { AppTypes } from "src/store/types";
-import { store } from "@store/store";
-import { Provider } from "react-redux";
 
 vi.mock("next/navigation", () => ({
-  useRouter: vi.fn(),
-  useSearchParams: vi.fn(),
-  usePathname: vi.fn(),
-}));
-
-vi.mock("next/router", () => ({
   useRouter: vi.fn().mockReturnValue({
-    query: { page: "1" },
     push: vi.fn(),
   }),
+  useSearchParams: vi
+    .fn()
+    .mockReturnValue({
+      get: vi.fn(),
+    })
+    .mockReturnValue(new URLSearchParams()),
+  usePathname: vi.fn(),
 }));
 
 const dispatchMock = vi.fn();
@@ -59,16 +57,15 @@ describe("PageLayout", () => {
       ],
       params: null,
       theme: "dark",
+      favourites: [],
     },
   });
 
   it("should render the card list", async () => {
     render(
-      <Provider store={store}>
-        <PageLayout searchValue="test">
-          <div>Test</div>
-        </PageLayout>
-      </Provider>,
+      <PageLayout searchValue="test">
+        <div>Test</div>
+      </PageLayout>,
     );
     await waitFor(() => {
       expect(screen.getByText("Luke Skywalker")).toBeInTheDocument();
@@ -78,11 +75,9 @@ describe("PageLayout", () => {
 
   it("should update the search value and dispatch the setParams action", async () => {
     render(
-      <Provider store={store}>
-        <PageLayout searchValue="test">
-          <div>Content</div>
-        </PageLayout>
-      </Provider>,
+      <PageLayout searchValue="test">
+        <div>Content</div>
+      </PageLayout>,
     );
 
     expect(dispatchMock).toHaveBeenCalledWith({
@@ -93,11 +88,9 @@ describe("PageLayout", () => {
 
   it("should update the page and dispatch the setParams action", async () => {
     render(
-      <Provider store={store}>
-        <PageLayout searchValue="">
-          <div>Content</div>
-        </PageLayout>
-      </Provider>,
+      <PageLayout searchValue="">
+        <div>Content</div>
+      </PageLayout>,
     );
 
     const paginationButton = screen.getByText("Next");

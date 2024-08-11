@@ -16,6 +16,15 @@ export const setPeople = (payload: StarWarsPeople): AppAction<StarWarsPeople> =>
   payload,
 });
 
+export const setFav = (payload: StarWarsPeople): AppAction<StarWarsPeople> => ({
+  type: AppTypes.SET_FAV,
+  payload,
+});
+
+export const removeFav = () => ({
+  type: AppTypes.REMOVE_FAV,
+});
+
 export const setLoading = (payload: boolean) => ({
   type: AppTypes.SET_LOADING,
   payload,

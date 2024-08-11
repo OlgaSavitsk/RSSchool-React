@@ -1,3 +1,5 @@
+"use client";
+
 import { ChangeEvent, FC, useCallback, useState } from "react";
 
 import { useStorage } from "../../hooks/use-storage.hook";

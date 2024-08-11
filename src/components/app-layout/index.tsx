@@ -1,13 +1,14 @@
+"use client";
+
 import { useStorage } from "@hooks/use-storage.hook";
 import { SearchComponent } from "@components/search";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { AppContext } from "src/context";
 import PageLayout from "./page-layout";
 import { RoutePath } from "src/constants/routes.constants";
-import { useRouter } from "next/router";
-import NotFoundPage from "@pages/404";
+import NotFoundPage from "src/app/not-found";
 import classes from "./index.module.css";
-import LoaderComponent from "@components/loader";
+import { usePathname } from "next/navigation";
 
 const pageLayout = {
   [RoutePath.Home]: PageLayout,
@@ -24,9 +25,9 @@ const LayoutComponent = ({ children }: LayoutComponentProps) => {
   const [input, setSearchValue] = useState(searchValue || "");
   const [themeValue, setTheme] = useState<"dark" | "light">("dark");
   const className = classes[themeValue];
-  const { route } = useRouter();
+  const pathname = usePathname();
 
-  const Layout = pageLayout[route as RoutePath];
+  const Layout = pageLayout[pathname as RoutePath];
 
   return (
     <AppContext.Provider value={{ theme: themeValue }}>
@@ -36,9 +37,7 @@ const LayoutComponent = ({ children }: LayoutComponentProps) => {
       />
 
       <div className={`${classes.wrapper_page} ${className}`}>
-        <Suspense fallback={<LoaderComponent />}>
-          <Layout searchValue={input}>{children}</Layout>
-        </Suspense>
+        <Layout searchValue={input}>{children}</Layout>
       </div>
     </AppContext.Provider>
   );

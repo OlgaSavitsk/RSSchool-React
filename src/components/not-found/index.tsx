@@ -1,3 +1,5 @@
+"use client";
+
 import classes from "./index.module.css";
 import Link from "next/link";
 

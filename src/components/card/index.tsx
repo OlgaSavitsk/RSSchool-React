@@ -1,29 +1,35 @@
+"use client";
+
 import { MouseEvent, FC, useCallback } from "react";
 
 import { StarWarsPeople } from "../../types/item.types";
 import { getId, isValueExist } from "../../utils";
 import IconStar from "../icon-star";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux.hook";
-import { addFavourites, favouritesSelector } from "../../redux/modules/favourites";
 import classes from "./index.module.css";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
+import { useAppContext } from "@hooks/use-context.hook";
+import { appActions } from "src/store";
 
 type CardComponentProps = {
   item: StarWarsPeople;
 };
 
 export const CardComponent: FC<CardComponentProps> = ({ item }) => {
-  const dispatch = useAppDispatch();
-  const { favourites } = useAppSelector(favouritesSelector);
-  const router = useRouter();
+  const {
+    dispatch,
+    state: { favourites },
+  } = useAppContext();
+  const searchParams = useSearchParams();
+
+  const search = searchParams.get("page");
 
   const isFavExist = isValueExist(favourites, item);
 
   const handleAddFavourites = useCallback(
     (event: MouseEvent) => {
       event.preventDefault();
-      dispatch(addFavourites(item));
+      dispatch(appActions.setFav(item));
     },
     [dispatch, item],
   );
@@ -33,7 +39,7 @@ export const CardComponent: FC<CardComponentProps> = ({ item }) => {
       data-testid="card"
       href={{
         pathname: `/people/${getId(item)}`,
-        query: { page: router.query.page },
+        query: { page: search },
       }}
       key={item.name}
     >

@@ -1,5 +1,5 @@
 import { expect, test, vi } from "vitest";
-import NotFoundPage from "@pages/404";
+import NotFoundPage from "src/app/not-found";
 import { render } from "@testing-library/react";
 
 vi.mock("next/navigate", () => ({

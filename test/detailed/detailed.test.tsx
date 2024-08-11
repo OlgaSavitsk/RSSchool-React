@@ -1,10 +1,8 @@
 import { vi } from "vitest";
 import { describe, expect, test } from "vitest";
 import { fireEvent, render } from "@testing-library/react";
-import DetailsComponent from "@pages/people/[slug]";
+import DetailsComponent from "@app/people/[slug]/page";
 import { useRouter } from "next/navigation";
-import { store } from "@store/store";
-import { Provider } from "react-redux";
 import * as useContext from "@hooks/use-context.hook";
 
 vi.mock("next/navigation", () => ({
@@ -13,6 +11,9 @@ vi.mock("next/navigation", () => ({
   }),
   useRouter: vi.fn().mockReturnValue({
     push: vi.fn(),
+  }),
+  useSearchParams: vi.fn().mockReturnValue({
+    get: vi.fn(),
   }),
 }));
 
@@ -43,16 +44,13 @@ describe("Detailed", () => {
       items: [],
       params: null,
       theme: "dark",
+      favourites: [],
     },
     dispatch: vi.fn(),
   });
 
   test("should render the details component correctly", () => {
-    const { getByText } = render(
-      <Provider store={store}>
-        <DetailsComponent />
-      </Provider>,
-    );
+    const { getByText } = render(<DetailsComponent />);
 
     expect(getByText("Luke Skywalker")).toBeInTheDocument();
     expect(getByText("172")).toBeInTheDocument();
@@ -60,11 +58,7 @@ describe("Detailed", () => {
   });
 
   test("should call fetchDetails with the correct slug", () => {
-    render(
-      <Provider store={store}>
-        <DetailsComponent />
-      </Provider>,
-    );
+    render(<DetailsComponent />);
 
     expect(fetchMock).toHaveBeenCalledWith("12");
   });
@@ -72,11 +66,7 @@ describe("Detailed", () => {
   test("should navigate to the home page when the back button is clicked", () => {
     const { push } = useRouter();
 
-    const { getByText } = render(
-      <Provider store={store}>
-        <DetailsComponent />
-      </Provider>,
-    );
+    const { getByText } = render(<DetailsComponent />);
     fireEvent.click(getByText("Back"));
 
     expect(push).toHaveBeenCalledWith("/");

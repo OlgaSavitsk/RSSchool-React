@@ -1,19 +1,21 @@
+"use client";
+
 import { useCallback, useEffect } from "react";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/router";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 export const usePagination = (page: number = 1) => {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
-      const params = new URLSearchParams(router.query.toString() || "");
+      const params = new URLSearchParams(Array.from(searchParams.entries()) || "");
       params.set(name, value);
 
       return params.toString();
     },
-    [router.query],
+    [searchParams],
   );
 
   useEffect(() => {

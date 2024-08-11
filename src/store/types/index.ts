@@ -5,6 +5,8 @@ export enum AppTypes {
   SET_PARAMS = "SET_PARAMS",
   SET_DETAILS = "SET_DETAILS",
   SET_LOADING = "SET_LOADING",
+  SET_FAV = "SET_FAV",
+  REMOVE_FAV = "REMOVE_FAV",
   SET_ERROR = "SET_ERROR",
 }
 
@@ -14,11 +16,12 @@ export type AppState = {
   isLoading: boolean;
   params: QueryParams | null;
   theme: "dark" | "light";
+  favourites: StarWarsPeople[];
 };
 
 export type AppAction<Payload> = {
   type: AppTypes;
-  payload: Payload;
+  payload?: Payload;
 };
 
 export type AppReducer = (state: AppState, actions: AppAction<AppState>) => AppState;

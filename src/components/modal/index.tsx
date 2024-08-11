@@ -1,18 +1,22 @@
+"use client";
+
 import { FC } from "react";
 
-import { useAppDispatch, useAppSelector } from "../../hooks/redux.hook";
-import { favouritesSelector, removeFavourites } from "../../redux/modules/favourites";
 import { convertCSV, transformNumber } from "../../utils";
 import classes from "./index.module.css";
 import Link from "next/link";
+import { useAppContext } from "@hooks/use-context.hook";
+import { appActions } from "src/store";
 
 export const ModalComponent: FC = () => {
-  const dispatch = useAppDispatch();
-  const { favourites } = useAppSelector(favouritesSelector);
+  const {
+    dispatch,
+    state: { favourites },
+  } = useAppContext();
   const encodeURL = encodeURI(convertCSV(favourites));
 
   const handleSelectAll = () => {
-    dispatch(removeFavourites());
+    dispatch(appActions.removeFav());
   };
 
   return (

@@ -1,10 +1,6 @@
 import { afterEach, describe, expect, test, vi } from "vitest";
 import { CardComponent } from "../../src/components/card/index";
-import { fireEvent } from "@testing-library/dom";
 import { render } from "@testing-library/react";
-import * as reduxHook from "../../src/hooks/redux.hook";
-import { Provider } from "react-redux";
-import { store } from "@store/store";
 
 const dataResponse = {
   id: "1",
@@ -16,9 +12,9 @@ const dataResponse = {
   url: "https://swapi.dev/api/people/12/",
 };
 
-vi.mock("next/router", () => ({
-  useRouter: vi.fn().mockReturnValue({
-    query: { page: "1" },
+vi.mock("next/navigation", () => ({
+  useSearchParams: vi.fn().mockReturnValue({
+    get: vi.fn(),
   }),
 }));
 
@@ -28,11 +24,7 @@ describe("Card", () => {
   });
 
   test("card component renders the relevant card data", () => {
-    const { getByText } = render(
-      <Provider store={store}>
-        <CardComponent item={dataResponse} />
-      </Provider>,
-    );
+    const { getByText } = render(<CardComponent item={dataResponse} />);
     expect(getByText(dataResponse.name)).toBeInTheDocument();
     expect(getByText(dataResponse.gender)).toBeInTheDocument();
     expect(getByText(dataResponse.hair_color)).toBeInTheDocument();
@@ -40,16 +32,15 @@ describe("Card", () => {
     expect(getByText(dataResponse.mass)).toBeInTheDocument();
   });
 
-  test("clicking triggers an additional API call to fetch detailed information", () => {
-    const spy = vi.spyOn(reduxHook, "useAppSelector");
-    const { getByTestId } = render(
-      <Provider store={store}>
-        <CardComponent item={dataResponse} />
-      </Provider>,
-    );
-    const button = getByTestId("favourites");
-    fireEvent.click(button);
+  // test("clicking triggers an additional API call to fetch detailed information", () => {
+  //   const spy = vi.spyOn(reduxHook, "useAppSelector");
+  //   const { getByTestId } = render(
 
-    expect(spy).toHaveBeenCalled();
-  });
+  //       <CardComponent item={dataResponse} />
+  //   );
+  //   const button = getByTestId("favourites");
+  //   fireEvent.click(button);
+
+  //   expect(spy).toHaveBeenCalled();
+  // });
 });

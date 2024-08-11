@@ -1,6 +1,8 @@
+"use client";
+
 import { FC, useRef } from "react";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { CardComponent } from "../card";
 import { isArrayWithItems } from "../../utils";
 import { StarWarsPeople } from "../../types/item.types";

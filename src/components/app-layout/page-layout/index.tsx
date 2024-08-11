@@ -1,8 +1,10 @@
+"use client";
+
 import { isArrayWithItems } from "@utils/index";
 import { CardListComponent } from "@components/card-list";
 import { PaginationComponent } from "@components/pagination";
 import { usePagination } from "@hooks/use-pagination.hook";
-import { useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import classes from "./index.module.css";
 import { useAppContext } from "@hooks/use-context.hook";
 import LoaderComponent from "@components/loader";
@@ -18,7 +20,7 @@ const PageLayout = ({ children, searchValue }: PageLayoutProps) => {
   usePagination(page);
   const {
     dispatch,
-    state: { items = [], isLoading },
+    state: { items = [] },
   } = useAppContext();
 
   const setParams = useCallback(() => {
@@ -32,13 +34,13 @@ const PageLayout = ({ children, searchValue }: PageLayoutProps) => {
 
   return (
     <div className={classes.wrapper}>
-      {isLoading ? <LoaderComponent /> : null}
-      <div className={classes.content}>
-        <CardListComponent data={items} />
+      <Suspense fallback={<LoaderComponent />}>
+        <div className={classes.content}>
+          <CardListComponent data={items} />
 
-        {children}
-      </div>
-
+          {children}
+        </div>
+      </Suspense>
       {isArrayWithItems(items) && <PaginationComponent setPage={(page) => setPage(page)} />}
     </div>
   );
