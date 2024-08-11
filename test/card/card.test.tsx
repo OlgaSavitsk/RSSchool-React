@@ -31,16 +31,4 @@ describe("Card", () => {
     expect(getByText(dataResponse.height)).toBeInTheDocument();
     expect(getByText(dataResponse.mass)).toBeInTheDocument();
   });
-
-  // test("clicking triggers an additional API call to fetch detailed information", () => {
-  //   const spy = vi.spyOn(reduxHook, "useAppSelector");
-  //   const { getByTestId } = render(
-
-  //       <CardComponent item={dataResponse} />
-  //   );
-  //   const button = getByTestId("favourites");
-  //   fireEvent.click(button);
-
-  //   expect(spy).toHaveBeenCalled();
-  // });
 });
