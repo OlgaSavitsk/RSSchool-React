@@ -1,10 +1,16 @@
-import { expect, test } from "vitest";
-import { renderWithRouter } from "../router";
-import App from "../../src/App";
+import HomePage from "@pages/index";
+import { expect, it } from "vitest";
+import { render } from "@testing-library/react";
 
-test("Not-found page", () => {
-    const { getByText } = renderWithRouter(
-        <App />
-    )
-    expect(getByText('Switch to light')).toBeInTheDocument();
+import { store } from "@store/store";
+import { Provider } from "react-redux";
+
+it("should render the home page correctly", () => {
+  const { getByText } = render(
+    <Provider store={store}>
+      <HomePage results={[]} />
+    </Provider>,
+  );
+
+  expect(getByText("Download")).toBeInTheDocument();
 });

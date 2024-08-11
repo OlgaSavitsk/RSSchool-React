@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux.hook";
 import { favouritesSelector, removeFavourites } from "../../redux/modules/favourites";
 import { convertCSV, transformNumber } from "../../utils";
 import classes from "./index.module.css";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 export const ModalComponent: FC = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +27,7 @@ export const ModalComponent: FC = () => {
           Unselect all
         </button>
         <Link
-          to={encodeURL}
+          href={encodeURL}
           download={`${favourites.length}_peoples.csv`}
           className={classes.button}
         >

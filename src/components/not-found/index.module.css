@@ -15,3 +15,15 @@
 .button {
   border-radius: 8px;
 }
+
+.wrapper_page {
+  height: 100%;
+}
+
+.light {
+  background: aliceblue;
+}
+
+.dark {
+  background: #242424;
+}

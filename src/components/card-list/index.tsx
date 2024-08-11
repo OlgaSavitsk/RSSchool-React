@@ -1,22 +1,22 @@
 import { FC, useRef } from "react";
 
-import classes from "./index.module.css";
-import { StarWarsPeople } from "../../types/item.types";
+import { useRouter } from "next/router";
 import { CardComponent } from "../card";
-import { Outlet, useNavigate } from "react-router-dom";
 import { isArrayWithItems } from "../../utils";
+import { StarWarsPeople } from "../../types/item.types";
+import classes from "./index.module.css";
 
 type CardListComponentProps = {
   data: StarWarsPeople[];
 };
 
 export const CardListComponent: FC<CardListComponentProps> = ({ data }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const container = useRef<HTMLDivElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (container.current === (event.target as HTMLElement)) {
-      navigate("/");
+      router.push("/");
     }
   };
 
@@ -30,7 +30,6 @@ export const CardListComponent: FC<CardListComponentProps> = ({ data }) => {
             <div className={classes.empty}>Nothing was found</div>
           )}
         </div>
-        <Outlet />
       </div>
     </>
   );

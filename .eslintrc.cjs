@@ -12,7 +12,6 @@ module.exports = {
   ignorePatterns: ["dist", ".eslintrc.cjs"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    // project: "./tsconfig.json",
     ecmaFeatures: {
       jsx: true,
     },
@@ -28,9 +27,8 @@ module.exports = {
   rules: {
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     "@typescript-eslint/no-explicit-any": "error",
-    "react-compiler/react-compiler": "error",
-    // "react/jsx-uses-react": 0,
     "react/jsx-uses-vars": "error",
-    // "react/react-in-jsx-scope": 0
+    "@typescript-eslint/no-var-requires": 'off',
+    "@typescript-eslint/triple-slash-reference": 'off'
   },
 };

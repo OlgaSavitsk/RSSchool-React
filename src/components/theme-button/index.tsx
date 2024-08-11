@@ -1,6 +1,6 @@
 import { FC, useContext } from "react";
-import { AppContext } from "../../context";
 import classes from "./index.module.css";
+import { AppContext } from "src/context";
 
 type ThemeButtonProps = {
   onClick: () => void;

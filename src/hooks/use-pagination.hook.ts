@@ -1,13 +1,25 @@
-import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useCallback, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 
-export const usePagination = (page: number) => {
-  const location = useLocation();
-  const navigate = useNavigate();
+export const usePagination = (page: number = 1) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(router.query.toString() || "");
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [router.query],
+  );
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    params.set("page", page.toString());
-    navigate(`/?${params.toString()}`);
-  }, [page, location.search, navigate]);
+    const search = createQueryString("page", page.toString());
+    const query = search ? `?${search}` : "";
+
+    router.push(`${pathname}${query}`);
+  }, [page]);
 };

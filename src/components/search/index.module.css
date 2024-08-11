@@ -6,23 +6,15 @@
   width: 100vw;
   background: darkmagenta;
 
-  img {
-    width: 100px;
-    height: 70px;
-  }
-
-  .error {
+  & .error {
     margin: 0 24px;
     border-radius: 8px;
   }
 
-  button {
+  & .button {
     height: 59px;
     border: none;
     border-radius: 6px;
-  }
-
-  .button {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }

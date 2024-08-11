@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 
 export function useStorage(key: string, init: string): [string, (value: string) => void] {
   const [searchValue, setSearchValue] = useState<string>(() => {
-    const savedValue = JSON.parse(localStorage.getItem(key)!);
+    let savedValue;
+    if (typeof window !== "undefined") {
+      savedValue = JSON.parse(localStorage.getItem(key)!);
+    }
     return savedValue ?? init;
   });
 

@@ -1,11 +1,13 @@
-import { expect, test } from "vitest";
-import { NotFound } from "../../src/pages/not-found";
-import { renderWithRouter } from "../router";
+import { expect, test, vi } from "vitest";
+import NotFoundPage from "@pages/404";
+import { render } from "@testing-library/react";
+
+vi.mock("next/navigate", () => ({
+  useRouter: vi.fn(),
+}));
 
 test("Not-found page", () => {
-    const { getByText } = renderWithRouter(
-        <NotFound />
-    )
-    const page = getByText('404')
-    expect(page).toBeInTheDocument();
+  const { getByText } = render(<NotFoundPage />);
+  const page = getByText("404");
+  expect(page).toBeInTheDocument();
 });

@@ -19,7 +19,7 @@ class ApiClient {
 }
 
 const apiClient = new ApiClient({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   responseType: "json",
 });
 

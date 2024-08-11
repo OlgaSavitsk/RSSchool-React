@@ -13,6 +13,6 @@ export type StarWarsPeople = {
 };
 
 export type QueryParams = {
-  searchValue: string;
-  page: number;
+  search: string;
+  page?: number;
 };

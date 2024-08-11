@@ -1,8 +1,9 @@
 import { ChangeEvent, FC, useCallback, useState } from "react";
 
 import { useStorage } from "../../hooks/use-storage.hook";
-import classes from "./index.module.css";
 import { ThemeButton } from "../theme-button";
+import Image from "next/image";
+import classes from "./index.module.css";
 
 type SearchComponentProps = {
   onChange: (value: string) => void;
@@ -39,7 +40,7 @@ export const SearchComponent: FC<SearchComponentProps> = ({ onChange, setToggleT
 
   return (
     <div className={classes.wrapper}>
-      <img src="../starwars.svg" alt="logo" />
+      <Image src="/starwars.svg" width={100} height={70} alt="logo" />
       <input
         type="text"
         value={inputValue}
