@@ -1,0 +1,47 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  max-width: 960px;
+  width: 100%;
+  margin: 24px auto;
+}
+
+.card {
+  width: 300px;
+  border: 1px solid #1897c2;
+  border-radius: 6px;
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+
+  .button {
+    background: none;
+    height: fit-content;
+    padding: 0;
+  }
+
+  .info {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 16px;
+  }
+}
+
+.descriptions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .dt::after {
+    content: ": ";
+  }
+}
