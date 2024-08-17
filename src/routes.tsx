@@ -1,7 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import { NotFound } from "./pages/not-found";
-import { DetailsComponent } from "./components/details";
+import { UncontrolledFormPage } from "./pages/uncontrol";
+import { ControlledFormPage } from "./pages/control";
+import { MainPage } from "./pages/main";
 
 export const router = createBrowserRouter([
   {
@@ -10,8 +12,16 @@ export const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
-        path: "people/:id",
-        element: <DetailsComponent />,
+        index: true,
+        element: <MainPage />,
+      },
+      {
+        path: "uncontrol",
+        element: <UncontrolledFormPage />,
+      },
+      {
+        path: "control",
+        element: <ControlledFormPage />,
       },
     ],
   },

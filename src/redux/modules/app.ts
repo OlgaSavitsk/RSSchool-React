@@ -1,42 +1,35 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { StarWarsPeople } from "../../types/item.types";
+import { ControlledForm, Countries, UncontrolledForm } from "../../types/item.types";
 import { ApplicationState } from "../store";
+import { countries } from "../../constants/countries.data";
 
 export type AppState = {
-  items: StarWarsPeople[];
-  item: StarWarsPeople | null;
-  isLoading: boolean;
-  isError: boolean;
+  controlledForm: ControlledForm | null;
+  uncontrolledForm: UncontrolledForm | null;
+  countries: Countries[];
 };
 
 export const initialState: AppState = {
-  items: [],
-  item: null,
-  isLoading: false,
-  isError: false,
+  controlledForm: null,
+  uncontrolledForm: null,
+  countries: countries,
 };
 
 export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setLoader(state, { payload: isLoading }: PayloadAction<boolean>) {
-      state.isLoading = isLoading;
+    setControlled(state, { payload: form }: PayloadAction<ControlledForm>) {
+      state.controlledForm = form;
     },
-    setError(state, { payload: isError }: PayloadAction<boolean>) {
-      state.isError = isError;
-    },
-    setItems(state, { payload: items }: PayloadAction<StarWarsPeople[]>) {
-      state.items = items;
-    },
-    setItem(state, { payload: item }: PayloadAction<StarWarsPeople>) {
-      state.item = item;
+    setUncontrolled(state, { payload: form }: PayloadAction<UncontrolledForm>) {
+      state.uncontrolledForm = form;
     },
   },
 });
 
 export const appSelector = (state: ApplicationState) => state.app;
 
-export const { setItems, setItem, setLoader, setError } = appSlice.actions;
+export const { setControlled, setUncontrolled } = appSlice.actions;
 
 export default appSlice.reducer;

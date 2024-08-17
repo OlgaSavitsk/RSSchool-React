@@ -1,0 +1,52 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  margin: 0 auto;
+}
+ 
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.part {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.item {
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  padding: 14px 20px;
+  border: 1px solid #000;
+  max-width: 280px;
+  width: 100%;
+  height: 20px;
+}
+
+.label {
+  position: absolute;
+  top: -13px;
+  left: 12px;
+  font-weight: 500;
+  font-size: 12px;
+  background: #fff;
+  padding: 0 8px;
+}
+
+label {
+  color: #242424;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

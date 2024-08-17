@@ -1,18 +1,18 @@
-export type StarWarsPeopleResponse = {
-  results: StarWarsPeople[];
-};
-
-export type StarWarsPeople = {
-  id: string;
-  gender: string;
-  hair_color: string;
-  height: string;
-  mass: string;
+export interface UncontrolledForm {
   name: string;
-  url: string;
-};
+  age: number;
+  email: string;
+  password: string;
+  confirm: string;
+  gender: string;
+  acceptTerms?: boolean;
+  image: string | null;
+  country: string;
+}
 
-export type QueryParams = {
-  searchValue: string;
-  page: number;
+export interface ControlledForm extends UncontrolledForm {}
+
+export type Countries = {
+  label: string;
+  value: string;
 };

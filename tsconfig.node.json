@@ -12,10 +12,6 @@
   },
   "include": [
     "vite.config.ts",
-    "test/setup.ts",
-    "src/mocks/node.ts",
-    "src/mocks/handlers.ts",
-    "src/mocks/data.ts",
     "src/types/item.types.ts"
   ]
 }
