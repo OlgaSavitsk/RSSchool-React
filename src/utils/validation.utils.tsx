@@ -6,11 +6,13 @@ import { ControlledForm } from "../types/item.types";
 
 export const validationSchema = Yup.object().shape({
   name: Yup.string()
-    .matches(/^[A-Z][a-z]*$/, "Name must start with an uppercase letter")
-    .required("Name is required"),
+    .matches(/^[a-zA-Z]/, "Name must start with a letter")
+    .required("Name is required")
+    .transform((value) => value.charAt(0).toUpperCase() + value.slice(1)),
   age: Yup.number()
     .integer("Age must be an integer")
     .positive("Age must be a positive number")
+    .nullable()
     .required("Age is required"),
   email: Yup.string().email("Invalid email address").required("Email is required"),
   password: Yup.string()
@@ -23,7 +25,8 @@ export const validationSchema = Yup.object().shape({
     .oneOf([Yup.ref("password")], "Passwords must match")
     .required("Confirm password is required"),
   gender: Yup.string().required("Gender is required"),
-  acceptTerms: Yup.boolean().required("You must accept the terms and conditions"),
+  acceptTerms: Yup.boolean()
+    .required("You must accept the terms and conditions"),
   image: Yup.mixed()
     .required("Picture is required")
     .test("fileSize", "File size is too large", (value) => {
@@ -38,7 +41,8 @@ export const validationSchema = Yup.object().shape({
       }
       return true;
     }),
-  country: Yup.string().required("Country is required"),
+  country: Yup.string()
+    .required("Country is required"),
 });
 
 export const useYupValidationResolver = () =>

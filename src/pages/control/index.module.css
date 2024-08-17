@@ -1,17 +1,60 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+  width: 800px;
   margin: 0 auto;
 }
-
-.title {
-  font-size: 36px;
-  color: crimson;
+ 
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  width: 100%;
 }
 
-.button {
-  border-radius: 8px;
+.part {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.item {
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  padding: 14px 20px;
+  border: 1px solid #000;
+  max-width: 280px;
+  width: 100%;
+  height: 20px;
+}
+
+.label {
+  position: absolute;
+  top: -13px;
+  left: 12px;
+  font-weight: 500;
+  font-size: 12px;
+  background: #fff;
+  padding: 0 8px;
+}
+
+label {
+  color: #242424;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  width: 100%;
+}
+
+.error {
+  position: absolute;
+  font-size: 12px;
+  bottom: -20px;
+  color: red;
 }

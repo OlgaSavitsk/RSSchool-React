@@ -10,11 +10,7 @@
     "lint:fix": "eslint --fix .",
     "format:fix": "prettier --write .",
     "preview": "vite preview",
-    "precommit": "lint-staged && lint:fix",
-    "prepare": "husky install",
-    "test": "vitest --run --reporter verbose --coverage",
-    "coverage": "vitest run --coverage",
-    "pre-push": "npm run test"
+    "precommit": "lint-staged && lint:fix"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.6",

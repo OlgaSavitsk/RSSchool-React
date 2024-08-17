@@ -3,8 +3,6 @@ import classes from "./index.module.css";
 
 export const SearchComponent = () => (
   <div className={classes.wrapper}>
-    <img src="../starwars.svg" alt="logo" />
-
     <nav>
       <ul>
         <li>
