@@ -10,8 +10,12 @@ export const validationSchema = Yup.object().shape({
     .required("Name is required")
     .transform((value) => value.charAt(0).toUpperCase() + value.slice(1)),
   age: Yup.number()
-    .integer("Age must be an integer")
-    .positive("Age must be a positive number")
+    .transform((value, originalValue) => {
+      if (originalValue === '') {
+        return null;
+      }
+      return value;
+    })
     .nullable()
     .required("Age is required"),
   email: Yup.string().email("Invalid email address").required("Email is required"),
