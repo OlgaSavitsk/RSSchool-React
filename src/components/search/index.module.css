@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  width: 100vw;
+  background: darkmagenta;
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+    text-align: start;
+    list-style-type: none;
+    padding: 10px;
+    font-size: 24px;
+  }
+}
